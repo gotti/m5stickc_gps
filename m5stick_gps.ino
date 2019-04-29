@@ -4,7 +4,6 @@
 #include <string>
 #define PI 3.14159265
 #define MAG 38
-#define MAGvector 10
 HardwareSerial SerialGPS(2);
 typedef struct GPGSV
 {
@@ -67,7 +66,6 @@ void loop()
     M5.Lcd.drawCircle(40, 40, 38, BLUE);
     M5.Lcd.drawLine(0, 40, 80, 40, BLUE);
     M5.Lcd.drawLine(40, 0, 40, 80, BLUE);
-    M5.Lcd.drawLine(40, 40, 40 + MAGvector * sin(gprmc.degree / (180 / PI)), 40 - 1 * MAGvector * cos(gprmc.degree / (180 / PI)), GREEN);
     for (int i = 0; i < 20; i++)
     {
       if (gpgsv[i].cn != 0 && gpgsv[i].satnumber != 0)
@@ -143,9 +141,7 @@ void loop()
       gprmc.y = temp % 100;
       gprmc.mo = (temp / 100) % 100;
       gprmc.d = (temp / 10000) % 100;
-      //SerialGPS.readStringUntil(',');
-      //SerialGPS.readStringUntil(',');
-      //SerialGPS.readStringUntil(',');
+      
       SerialGPS.readStringUntil('\n');
       char tempstr[20] = {'\0'};
       sprintf(tempstr, "20%d/%d/%d ", gprmc.y, gprmc.mo, gprmc.d);
